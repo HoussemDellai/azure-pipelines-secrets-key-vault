@@ -8,7 +8,7 @@ steps:
 - task: AzureKeyVault@2
   inputs:
     azureSubscription: 'spn-keyvault-devops'
-    KeyVaultName: 'Your-Key-Vault-Name'
+    KeyVaultName: 'keyvault019'
     SecretsFilter: '*'
     RunAsPreJob: false
 
