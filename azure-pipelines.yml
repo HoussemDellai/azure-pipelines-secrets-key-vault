@@ -17,6 +17,7 @@ steps:
   displayName: Write Secret into File
   inputs:
     script: |
+      echo $(DatabasePassword)
       echo $(DatabasePassword) > secret.txt
       cat secret.txt
 
