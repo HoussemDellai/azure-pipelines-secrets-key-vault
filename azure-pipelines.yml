@@ -10,7 +10,7 @@ steps:
   inputs:
     azureSubscription: 'spn-keyvault-devops'
     KeyVaultName: 'keyvault019'
-    SecretsFilter: '*'
+    SecretsFilter: '*' # 'DatabasePassword'
     RunAsPreJob: false
 
 - task: CmdLine@2
