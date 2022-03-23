@@ -1,0 +1,35 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureKeyVault@2
+  displayName: Get Secrets from Key Vault
+  inputs:
+    azureSubscription: 'spn-keyvault-devops'
+    KeyVaultName: 'keyvault019'
+    SecretsFilter: '*' # 'DatabasePassword'
+    RunAsPreJob: false
+
+- task: CmdLine@2
+  displayName: Write Secret into File
+  inputs:
+    script: |
+      echo $(DatabasePassword)
+      echo $(DatabasePassword) > secret.txt
+      cat secret.txt
+
+- task: CopyFiles@2
+  displayName: Copy Secrets File
+  inputs:
+    Contents: secret.txt
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish Secrets File
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
